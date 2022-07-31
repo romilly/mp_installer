@@ -4,6 +4,7 @@ import pathlib
 import shutil
 import subprocess
 import time
+import sys
 
 
 class Installer:
@@ -41,5 +42,17 @@ class Installer:
         self.wait_for_pico_dir(False)
 
 
+def print_usage_and_exit():
+    print('usage installer.py [nuke]')
+    sys.exit(1)
+
+
 if __name__ == '__main__':
-    Installer().install_upython()
+    i = Installer()
+    if len(sys.argv) not in [2, 3]:
+        print_usage_and_exit()
+    if len(sys.argv) == 3:
+        if sys.argv[2] != 'nuke':
+            print_usage_and_exit()
+        i.nuke()
+    i.install_upython()
