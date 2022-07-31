@@ -49,9 +49,9 @@ def print_usage_and_exit():
 
 if __name__ == '__main__':
     i = Installer()
-    if len(sys.argv) not in [2, 3]:
+    if len(sys.argv) not in [1, 2]:
         print_usage_and_exit()
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 2:
         if sys.argv[2] != 'nuke':
             print_usage_and_exit()
         i.nuke()
