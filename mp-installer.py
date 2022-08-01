@@ -1,4 +1,4 @@
-#! /user/bin/env python3
+#! /usr/bin/env python3
 import getpass
 import pathlib
 import shutil
@@ -28,13 +28,13 @@ class Installer:
         time.sleep(1)
         self.wait_for_pico_dir()
 
-    def install_upython(self):
+    def install_upython(self, uf2_path):
+        print('installing %s' % uf2_path)
         if not self.pico_dir.exists():
             self.enter_bootloader()
         for i in range(10):
             try:
-                path = self.location.joinpath('uf2/rp2-pico-w-latest.uf2')
-                shutil.copy(path, self.pico_dir)
+                shutil.copy(uf2_path, self.pico_dir)
                 break
             except PermissionError:
                 time.sleep(1)
@@ -43,16 +43,21 @@ class Installer:
 
 
 def print_usage_and_exit():
-    print('usage installer.py [nuke]')
+    print('usage mp-installer.py <uf2 file> [nuke]')
     sys.exit(1)
 
 
 if __name__ == '__main__':
     i = Installer()
-    if len(sys.argv) not in [1, 2]:
+    if len(sys.argv) not in [2, 3]:
         print_usage_and_exit()
-    if len(sys.argv) == 2:
+    uf2_path = pathlib.Path(sys.argv[1])
+    if not uf2_path.exists():
+        print("can't find %s")
+        print_usage_and_exit()
+    if len(sys.argv) == 3:
         if sys.argv[2] != 'nuke':
             print_usage_and_exit()
+        print('nuking rpi filesystem')
         i.nuke()
-    i.install_upython()
+    i.install_upython(uf2_path)

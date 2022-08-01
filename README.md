@@ -14,11 +14,15 @@ Clone this repository into a directory of your choice.
 
 ## Usage
 
-Make sure that installer.py is executable.
+Make sure that mp-installer.py is executable.
 From the project root, run
 
-`installer.py [nuke]`
+`./mp-installer.py <uf2 file> [nuke]`
 
-This will install the `rp2-pico-w-latest.uf2` MicroPython file from the uf2 subdirectory to an attached Pico or Pico W.
-
+This will install the MicroPython file whose path is <uf2 filew> to an attached Pico or Pico W.
 The optional `nuke ` argument will _nuke_ (delete) the entire Pico file system before installing MicroPython.
+
+So if I change to the project root and type 
+`./mp-installer.py ~/Downloads/pi-pico/rp2-pico-w-20220727-unstable-v1.19.1-216-g45ab801c3.uf2`
+that will leave the Pico filesystem untouched and install the nightly build for the Pico W from 27 July 2022.
+
